@@ -1,34 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import Tour from "./Tour";
 
-const Tour = ({ id, image, info, name, price, removeTour }) => {
-  const [readMore, setReadMore] = useState(false);
-
+function Tours({ tours, removeTour }) {
   return (
-    <article className="single-tour">
-      <img src={image} alt={name} />
+    <section>
+      <div className="title">
+        <h2>Our Tours</h2>
+      </div>
 
-      <footer>
-        <div className="tour-info">
-          <h4>{name}</h4>
-          <h4 className="tour-price">${price}</h4>
-        </div>
-
-        <p>
-          {readMore ? info : `${info.substring(0, 200)}...`}
-          <button onClick={() => setReadMore(!readMore)}>
-            {readMore ? "Show Less" : "Read More"}
-          </button>
-        </p>
-
-        <button
-          className="delete-btn"
-          onClick={() => removeTour(id)}
-        >
-          Not Interested
-        </button>
-      </footer>
-    </article>
+      {tours.map((tour) => {
+        return (
+          <Tour
+            key={tour.id}
+            {...tour}
+            removeTour={removeTour}
+          />
+        );
+      })}
+    </section>
   );
-};
+}
 
-export default Tour;
+export default Tours;
