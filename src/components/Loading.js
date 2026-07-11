@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const Loading = () => {
   return (
-    <div className="loading">
-      <h1>Loading...</h1>
-    </div>
+    <h2 className="loading">
+      Loading...
+    </h2>
   );
 };
 
