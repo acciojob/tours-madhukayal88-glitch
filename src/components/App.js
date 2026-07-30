@@ -1,32 +1,29 @@
-import React, { useState, useEffect } from "react";
-import "../styles/App.css";
-import Loading from "./Loading";
-import Tours from "./Tours";
+import React, { useState, useEffect } from 'react';
+import Tours from './Tours';
+import Loading from './Loading';
+import './App.css';
 
-const url = "https://www.course-api.com/react-tours-project";
+const url = 'https://course-api.com/react-tours-project';
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [tours, setTours] = useState([]);
 
   const removeTour = (id) => {
-    setTours((prevTours) =>
-      prevTours.filter((tour) => tour.id !== id)
-    );
+    const newTours = tours.filter((tour) => tour.id !== id);
+    setTours(newTours);
   };
 
   const fetchTours = async () => {
     setLoading(true);
-
     try {
       const response = await fetch(url);
-      const data = await response.json();
-
-      setTours(data);
+      const tours = await response.json();
       setLoading(false);
+      setTours(tours);
     } catch (error) {
-      console.log(error);
       setLoading(false);
+      console.log(error);
     }
   };
 
@@ -36,7 +33,7 @@ function App() {
 
   if (loading) {
     return (
-      <main id="main">
+      <main>
         <Loading />
       </main>
     );
@@ -44,10 +41,10 @@ function App() {
 
   if (tours.length === 0) {
     return (
-      <main id="main">
+      <main>
         <div className="title">
-          <h2>No more tours</h2>
-          <button className="btn" onClick={fetchTours}>
+          <h2>No tours left</h2>
+          <button className="btn" onClick={() => fetchTours()}>
             Refresh
           </button>
         </div>
@@ -56,7 +53,7 @@ function App() {
   }
 
   return (
-    <main id="main">
+    <main>
       <Tours tours={tours} removeTour={removeTour} />
     </main>
   );
